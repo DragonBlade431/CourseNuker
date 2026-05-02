@@ -193,7 +193,6 @@ CourseNuker/
 - Use HTTPS in any production/hosted deployment
 
 ---
----
 
 ## Contributing
 
