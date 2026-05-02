@@ -518,7 +518,7 @@ app.listen(PORT, () => {
   console.log(`\n⚔️   CourseNuker is live → http://localhost:${PORT}`);
   console.log(`    VTU: "Please watch all 166 lectures."`);
   console.log(`    CourseNuker: "Not even close, baby."`);
-  console.log(`    — Technoblade never dies.\n`);
+  console.log(`    — The blade never dies.\n`);
   ensureSeed().catch(e => console.warn("[redis] seed failed:", e.message));
   restoreQueueFromRedis().catch(e => console.warn("[queue] restore failed:", e.message));
 });

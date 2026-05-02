@@ -4,7 +4,7 @@
 
 **CourseNuker** automates marking VTU online course lectures as complete — parallel processing, smart retries, real-time progress, and a clean web UI.
 
-*"Not even close, baby."* — Technoblade never dies.
+*"Not even close, baby."* — The blade never dies.
 
 ---
 
@@ -208,4 +208,4 @@ PRs and issues welcome.
 ---
 
 *"If you want me to stop, then win."*  
-*Technoblade never dies. ⚔️*
+*The blade never dies. ⚔️*

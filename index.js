@@ -361,7 +361,7 @@ async function run() {
     console.log(`Nuked: ${processedCount}`);
     console.log(`Skipped: ${skippedCount}`);
     console.log(`Total: ${lectures.length}`);
-    console.log("\nTechnoblade never dies. ⚔️");
+    console.log("\nThe blade never dies. ⚔️");
 }
 
 run().catch(err => {
