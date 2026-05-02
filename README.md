@@ -193,11 +193,6 @@ CourseNuker/
 - Use HTTPS in any production/hosted deployment
 
 ---
-
-## License
-
-MIT © DragonBlade
-
 ---
 
 ## Contributing
