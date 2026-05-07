@@ -15,7 +15,7 @@ function sleep(ms) {
 }
 
 /**
- * Run the full CourseNuker automation for a given user/course.
+ * Run the full VTU course automation for a given user/course.
  *
  * @param {object} config
  * @param {string} config.email
@@ -56,10 +56,10 @@ async function runAutomation(
         await login();
         return request(cfg, false);
       }
-      // VTU server is fighting back — back off and retry once silently
+      // VTU server is overloaded — back off and retry once silently
       if (retry && (s === 500 || s === 503 || s === 429)) {
         const wait = retryDelay > 0 ? retryDelay : 2000;
-        console.warn(`[coursenuker] ${s} — backing off ${wait}ms`);
+        console.warn(`[vtu] ${s} — backing off ${wait}ms`);
         await sleep(wait);
         return request(cfg, false);
       }
@@ -77,7 +77,7 @@ async function runAutomation(
   }
 
   // ── Step 1: Login ─────────────────────────────────────────────────────────
-  emit("phase", { message: "Infiltrating VTU's defenses..." });
+  emit("phase", { message: "Sneaking past VTU's login page..." });
   try {
     await login();
   } catch (err) {
@@ -87,7 +87,7 @@ async function runAutomation(
   }
 
   // ── Step 2: Fetch course structure ────────────────────────────────────────
-  emit("phase", { message: "Scouting the battlefield..." });
+  emit("phase", { message: "Loading course structure..." });
   let courseTitle, lectures;
   try {
     const res = await request({
@@ -114,7 +114,7 @@ async function runAutomation(
   }
 
   // ── Step 3: Complete each lecture ─────────────────────────────────────────
-  emit("phase", { message: `Blood for the blood god. ${lectures.length} lectures marked for execution.` });
+  emit("phase", { message: `Nuking ${lectures.length} lectures into oblivion...` });
 
   const total = lectures.length;
   const durationCache = new Map(); // lec.id → seconds (fetched once, reused across rounds)
@@ -146,7 +146,7 @@ async function runAutomation(
       if (!secs) {
         // Zero duration — VTU has no watchable content; skip permanently.
         skipped++;
-        emit("lecture_done", { idx, total, title: lec.title, status: "skip", reason: "Zero duration — VTU has no content here. Even the Blood God can't nuke nothing.", completed, skipped });
+        emit("lecture_done", { idx, total, title: lec.title, status: "skip", reason: "VTU reported zero duration — no video content available for this lecture", completed, skipped });
         return "skip";
       }
 
@@ -192,7 +192,7 @@ async function runAutomation(
 
   // Anything still pending after maxAttempts rounds — VTU refused to cooperate
   if (pending.length > 0) {
-    emit("phase", { message: `${pending.length} lecture(s) survived ${maxAttempts} round(s). They fought back. Respect.` });
+    emit("phase", { message: `${pending.length} lecture(s) couldn't be marked complete after ${maxAttempts} round(s). VTU is VTU.` });
     for (const { lec, idx } of pending) {
       emit("lecture_done", { idx, total, title: lec.title, status: "maxed", reason: `Did not reach 100% after ${maxAttempts} round(s)`, completed, skipped });
     }
